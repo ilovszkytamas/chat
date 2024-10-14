@@ -21,7 +21,7 @@ public class RegisterRequest {
     private String lastName;
 
     @NotEmpty(message = "Email must not be empty")
-    @Email(message = "Invalid email format", regexp = "^(.+)@(\\S+)$")
+    //@Email(message = "Invalid email format", regexp = "^(.+)@(\\S+)$")
     private String email;
 
     // TODO: revert it to 8 later

@@ -5,11 +5,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import UserSearch from '../user-search.tsx/UserSearch';
 
 const Header: React.FC = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" style={{maxHeight:'70px'}}>
         <Toolbar>
           <IconButton
             size="large"
@@ -20,9 +21,10 @@ const Header: React.FC = () => {
           >
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            Profile
           </Typography>
-          <Button color="inherit">Login</Button>
+          <UserSearch />
+          <Button color="inherit">Logout</Button>
         </Toolbar>
       </AppBar>
     </Box>
