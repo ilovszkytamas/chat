@@ -12,5 +12,13 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=test
       - MYSQL_DATABASE=chat
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: mysqldb
+    restart: always
+    ports:
+      - 7777:8080
 volumes:
   mysql:

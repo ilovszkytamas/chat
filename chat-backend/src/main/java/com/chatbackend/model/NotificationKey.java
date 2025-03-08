@@ -6,14 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.io.Serializable;
-
 @Embeddable
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Key implements Serializable {
-    private Long ownerId;
-    private Long friendId;
+public class NotificationKey {
+    private Long recipientId;
+    private Long senderId;
 }

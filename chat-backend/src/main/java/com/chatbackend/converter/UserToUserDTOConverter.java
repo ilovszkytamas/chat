@@ -6,7 +6,7 @@ import org.springframework.core.convert.converter.Converter;
 
 public class UserToUserDTOConverter implements Converter<User, UserDTO> {
     @Override
-    public UserDTO convert(User source) {
+    public UserDTO convert(final User source) {
         return UserDTO
             .builder()
             .id(source.getId())
