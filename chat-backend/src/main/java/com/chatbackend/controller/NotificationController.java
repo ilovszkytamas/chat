@@ -14,32 +14,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.EmitterProcessor;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Sinks;
+
+import java.time.Duration;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/notifications")
 public class NotificationController {
-    final EmitterProcessor<NotificationEvent> processor;
+    private final Sinks.Many<NotificationDTO> sink;
+
+    public NotificationController() {
+        this.sink = Sinks.many().multicast().onBackpressureBuffer();
+    }
 
     @GetMapping(path = "/{id}", produces= MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<NotificationDTO> notificationListener(final @AuthenticationPrincipal User user, final @PathVariable Long id) {
-        return processor
-                .filter(notificationEvent -> notificationEvent.getNotification().getRecipient().getId() == id)
-                .map(this::mapNotificationEventToNotificationDTO);
+        return sink.asFlux().filter(notificationDTO -> notificationDTO.getRecipientId() == id).delayElements(Duration.ofMillis(100));
     }
 
     @EventListener
     private void listenToEvent(final NotificationEvent notificationEvent) {
-        System.out.println("event");
-        processor.sink().next(notificationEvent);
+        sink.tryEmitNext(mapNotificationEventToNotificationDTO(notificationEvent));
     }
 
     private NotificationDTO mapNotificationEventToNotificationDTO(final NotificationEvent notificationEvent) {
         final Notification notification = notificationEvent.getNotification();
-        System.out.println(notification.toString());
         return NotificationDTO
                 .builder()
                 .senderId(notification.getSender().getId())
+                .recipientId(notification.getRecipient().getId())
                 .senderFullName(notification.getSender().getFullName())
                 .notificationStatus(notification.getNotificationStatus())
                 .build();

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NotificationDTO {
     private Long senderId;
+    private Long recipientId;
     private String message;
     private String senderFullName;
     private NotificationStatus notificationStatus;

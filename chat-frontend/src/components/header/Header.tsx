@@ -5,7 +5,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import UserSearch from '../user-search.tsx/UserSearch';
+import UserSearch from './UserSearch';
+import Notifications from './Notifications';
 
 const Header: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const Header: React.FC = () => {
             Profile
           </Typography>
           <UserSearch />
+          <Notifications />
           <Button color="inherit">Logout</Button>
         </Toolbar>
       </AppBar>
