@@ -11,8 +11,10 @@ const Notifications: React.FC = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isNotificationsOpen = Boolean(anchorEl);
   const [notifications, setNotifications] = React.useState<Notification[]>([]);
+  const eventSourceRef = React.useRef<EventSourcePolyfill | null>(null);
 
-  React.useEffect(() => {
+  /*React.useEffect(() => {
+    if (!signedInUser || eventSourceRef.current) return;
     async function fetchNotifications() {
       if (signedInUser) {
         const retreivedNotifications: Notification[] = await API.get(`/notifications`);
@@ -21,21 +23,24 @@ const Notifications: React.FC = () => {
       }
     }
     fetchNotifications();
-    if (signedInUser) {
-      const eventSource = new EventSourcePolyfill(`http://localhost:8080/notifications/${signedInUser.id}`, {
+    let eventSource: EventSourcePolyfill | null = null;
+      eventSource = new EventSourcePolyfill(`http://localhost:8080/notifications/${signedInUser.id}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-      console.log(eventSource);
       eventSource.onmessage = (event) => {
         const receivedNotification: Notification = event.data;
-        setNotifications([...notifications, receivedNotification]);
+        setNotifications(prev => [...prev, receivedNotification]);
       };
+      eventSourceRef.current = eventSource;
       
-      return () => eventSource.close();
-    }
-  }, [signedInUser]);
+      return () => {
+        console.log('Closing EventSource');
+        eventSourceRef.current?.close();
+        eventSourceRef.current = null;
+      };
+  }, [signedInUser]);*/
 
   const handleNotificationsOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

@@ -1,4 +1,4 @@
-import { InputLabel, TextField } from '@mui/material';
+import { Box, InputLabel, TextField } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { FieldError, ProfileData } from '../../constants/types';
@@ -56,12 +56,12 @@ const ProfileInputs = forwardRef((props: ProfileInputProps, ref) => {
 
   return (
     <React.Fragment>
-      <Grid2 container direction="row" alignItems="center" spacing={5}>
-        <Grid2>
-          <InputLabel>Email</InputLabel>
-        </Grid2>
-        <Grid2>
+      <Box display="flex" flexDirection="column" gap={3} mt={1}>
+        <Box>
+          <InputLabel sx={{ mb: 0.5 }}>Email</InputLabel>
           <TextField
+            fullWidth
+            size="small"
             name="email"
             value={profileData?.email}
             onChange={onChangeHandler}
@@ -69,14 +69,13 @@ const ProfileInputs = forwardRef((props: ProfileInputProps, ref) => {
             helperText={fieldErrors?.find((e) => e.fieldName === "email")?.errorMessage}
             disabled={isDisabled}
           />
-        </Grid2>
-      </Grid2>
-      <Grid2 container direction="row" alignItems="center" spacing={5}>
-        <Grid2>
-          <InputLabel>First Name</InputLabel>
-        </Grid2>
-        <Grid2>
-          <TextField 
+        </Box>
+
+        <Box>
+          <InputLabel sx={{ mb: 0.5 }}>First Name</InputLabel>
+          <TextField
+            fullWidth
+            size="small"
             name="firstName"
             value={profileData?.firstName}
             onChange={onChangeHandler}
@@ -84,14 +83,13 @@ const ProfileInputs = forwardRef((props: ProfileInputProps, ref) => {
             helperText={fieldErrors?.find((e) => e.fieldName === "firstName")?.errorMessage}
             disabled={isDisabled}
           />
-        </Grid2>
-      </Grid2>
-      <Grid2 container direction="row" alignItems="center" spacing={5}>
-        <Grid2>
-          <InputLabel>Last Name</InputLabel>
-        </Grid2>
-        <Grid2>
+        </Box>
+
+        <Box>
+          <InputLabel sx={{ mb: 0.5 }}>Last Name</InputLabel>
           <TextField
+            fullWidth
+            size="small"
             name="lastName"
             value={profileData?.lastName}
             onChange={onChangeHandler}
@@ -99,10 +97,10 @@ const ProfileInputs = forwardRef((props: ProfileInputProps, ref) => {
             helperText={fieldErrors?.find((e) => e.fieldName === "lastName")?.errorMessage}
             disabled={isDisabled}
           />
-        </Grid2>
-      </Grid2>
+        </Box>
+      </Box>
     </React.Fragment>
-  )
+  );
 })
 
 export default ProfileInputs;

@@ -6,7 +6,7 @@ import { ErrorType } from '../../constants/enums';
 import { FieldError, ProfileData } from '../../constants/types';
 import ImageUploader from './ImageUploader';
 import ProfileInputs from './ProfileInputs';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useRefreshSignedInUser } from '../../hooks/useRefreshSignedInUser';
 import { useGlobalContext } from '../../store/context/GlobalContext';
 import FriendInteractionButton from '../friend-interaction/FriendInteractionButton';
@@ -31,7 +31,6 @@ const ProfilePage: React.FC = () => {
   const refreshSignedInUser = useRefreshSignedInUser();
   const [isEditDisabled, setIsEditDisabled] = useState<boolean>(false);
   const [currentUrlId, setCurrentUrlId] = useState<string|null>(null);
-  const location = useLocation();
 
   const loadProfileData = async () => {
     await refreshSignedInUser();
@@ -49,11 +48,6 @@ const ProfilePage: React.FC = () => {
       setIsEditDisabled(true);
     }
   }
-
-  React.useEffect(() => {
-    const urlId = searchParams.get("id");
-    setCurrentUrlId(urlId);
-  }, [location]);
 
   const loadProfileImage = async () => {
     if (false) {
@@ -125,17 +119,47 @@ const ProfilePage: React.FC = () => {
   };
 
   return (
-    <Grid2 container direction="column" alignItems="center">
-      <ProfileInputs 
-        profileData={profileData} 
-        onChangeHandler={onChangeHandler}
-        fieldErrors={fieldErrors}
-        setFieldErrors={setFieldErrors}
-        isDisabled={isEditDisabled}
-        ref={inputRef}  />
-      <ImageUploader image={image} onFileChangeHandler={onFileChangeHandler} isDisabled={isEditDisabled}/>
-      <Button onClick={submitChanges} style={{ display: isEditDisabled ? 'none' : undefined }}>Save Changes</Button>
-      <FriendInteractionButton hidden={!isEditDisabled} id={profileData?.id || undefined}/>
+    <Grid2
+      container
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      spacing={4}
+      sx={{ px: 2, py: 4 }}
+    >
+      <Grid2>
+        <ProfileInputs
+          profileData={profileData}
+          onChangeHandler={onChangeHandler}
+          fieldErrors={fieldErrors}
+          setFieldErrors={setFieldErrors}
+          isDisabled={isEditDisabled}
+          ref={inputRef}
+        />
+      </Grid2>
+  
+      <Grid2>
+        <ImageUploader
+          image={image}
+          onFileChangeHandler={onFileChangeHandler}
+          isDisabled={isEditDisabled}
+        />
+      </Grid2>
+  
+      <Grid2>
+        {!isEditDisabled && (
+          <Button variant="contained" color="primary" onClick={submitChanges}>
+            Save Changes
+          </Button>
+        )}
+      </Grid2>
+  
+      <Grid2>
+        <FriendInteractionButton
+          hidden={!isEditDisabled}
+          id={profileData?.id || undefined}
+        />
+      </Grid2>
     </Grid2>
   );
 }

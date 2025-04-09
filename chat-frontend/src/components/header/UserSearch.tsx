@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ListItem, ListItemButton, ListItemText, TextField } from '@mui/material';
+import { Box, ListItem, ListItemButton, ListItemText, Paper, TextField } from '@mui/material';
 import { ProfileData } from '../../constants/types';
 import API from '../../config/api';
 import { useNavigate } from 'react-router-dom';
@@ -29,24 +29,57 @@ const UserSearch: React.FC = () => {
   }, [searchTerm])
 
   return (
-    <div style={{position: 'relative', marginTop: '10px', backgroundColor: 'inherit'}}>
+    <Box sx={{ position: 'relative', mt: 1, width: 250 }}>
       <TextField
-        type='text'
-        placeholder='Search for users'
+        fullWidth
+        size="small"
+        placeholder="Search for users"
+        variant="outlined"
         onChange={(e) => setSearchTerm(e.target.value)}
+        sx={{
+          backgroundColor: 'background.paper',
+          borderRadius: 1,
+          '& .MuiOutlinedInput-root': {
+            fontSize: '0.9rem',
+          },
+        }}
       />
-      {
-        searchResult.map((user) => {
-          return (
-            <ListItem style={{backgroundColor: '#1976d2'}} key={user.id}>
+
+      {searchResult.length > 0 && (
+        <Paper
+          elevation={4}
+          sx={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            mt: 1,
+            maxHeight: 300,
+            overflowY: 'auto',
+            zIndex: 10,
+            borderRadius: 2,
+          }}
+        >
+          {searchResult.map((user) => (
+            <ListItem
+              key={user.id}
+              disablePadding
+              sx={{ backgroundColor: 'primary.main' }}
+            >
               <ListItemButton onClick={() => handleUserOnClick(user.id!)}>
-                <ListItemText primary={`${user.firstName} ${user.lastName}`}/>
+                <ListItemText
+                  primary={`${user.firstName} ${user.lastName}`}
+                  primaryTypographyProps={{
+                    color: 'common.white',
+                    fontSize: '0.95rem',
+                  }}
+                />
               </ListItemButton>
             </ListItem>
-          )
-        })
-      }
-    </div>
+          ))}
+        </Paper>
+      )}
+    </Box>
   );
 }
 

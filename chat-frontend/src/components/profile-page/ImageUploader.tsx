@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
 import { isDisabled } from '@testing-library/user-event/dist/utils';
 import React from 'react';
 
@@ -12,20 +12,26 @@ const ImageUploader: React.FC<Props> = (props) => {
   const { image, onFileChangeHandler, isDisabled } = props;
 
   return (
-    <React.Fragment>
-      <input type="file" onChange={onFileChangeHandler} hidden={isDisabled}/>
+    <Stack spacing={2} alignItems="center" sx={{ mt: 4, mb: 2 }}>
       <Box
         component="img"
         sx={{
-          height: 233,
-          width: 350,
-          maxHeight: { xs: 233, md: 167 },
-          maxWidth: { xs: 350, md: 250 },
+          height: 200,
+          width: 200,
+          borderRadius: '50%',
+          objectFit: 'cover',
+          boxShadow: 3,
         }}
-        alt="Blank Picture"
+        alt="Profile Picture"
         src={image}
       />
-    </React.Fragment>
+      {!isDisabled && (
+        <Button variant="contained" component="label">
+          Upload Image
+          <input type="file" hidden onChange={onFileChangeHandler} />
+        </Button>
+      )}
+    </Stack>
   );
 }
 
