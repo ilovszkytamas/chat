@@ -18,3 +18,8 @@ export enum FriendRelation {
   REJECTED = "REJECTED",
   ACCEPTED = "ACCEPTED",
 }
+
+export enum NotificationStatus {
+  READ = "READ",
+  UNREAD = "UNREAD"
+}

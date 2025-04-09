@@ -6,14 +6,13 @@ import { ErrorType } from '../../constants/enums';
 import { FieldError, ProfileData } from '../../constants/types';
 import ImageUploader from './ImageUploader';
 import ProfileInputs from './ProfileInputs';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { useRefreshSignedInUser } from '../../hooks/useRefreshSignedInUser';
 import { useGlobalContext } from '../../store/context/GlobalContext';
 import FriendInteractionButton from '../friend-interaction/FriendInteractionButton';
 
 const ProfilePage: React.FC = () => {
-  const { state, dispatch } = useGlobalContext()
-  console.log(state)
+  const { state } = useGlobalContext()
   const { signedInUser } = state;
   const [profileData, setProfileData] = useState<ProfileData>({
     id: null,
@@ -31,12 +30,14 @@ const ProfilePage: React.FC = () => {
   const [searchParams, _] = useSearchParams();
   const refreshSignedInUser = useRefreshSignedInUser();
   const [isEditDisabled, setIsEditDisabled] = useState<boolean>(false);
+  const [currentUrlId, setCurrentUrlId] = useState<string|null>(null);
+  const location = useLocation();
 
   const loadProfileData = async () => {
     await refreshSignedInUser();
     const urlId = searchParams.get("id");
-    console.log(urlId)
-    if (!urlId || urlId === signedInUser.id?.toString()) {
+    setCurrentUrlId(urlId);
+    if (!currentUrlId || currentUrlId === signedInUser.id?.toString()) {
       setProfileData(signedInUser);
       setProfileDataLoaded(true);
       setIsEditDisabled(false);
@@ -48,6 +49,11 @@ const ProfilePage: React.FC = () => {
       setIsEditDisabled(true);
     }
   }
+
+  React.useEffect(() => {
+    const urlId = searchParams.get("id");
+    setCurrentUrlId(urlId);
+  }, [location]);
 
   const loadProfileImage = async () => {
     if (false) {

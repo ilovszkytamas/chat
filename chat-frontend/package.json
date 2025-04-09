@@ -5,8 +5,8 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.14.14",
     "@mui/icons-material": "^5.14.14",
+    "@mui/material": "^5.14.14",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -16,6 +16,7 @@
     "@types/react-dom": "^18.2.13",
     "axios": "^1.5.1",
     "country-list-js": "^3.1.7",
+    "event-source-polyfill": "^1.0.31",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -47,6 +48,8 @@
     ]
   },
   "devDependencies": {
+    "@types/event-source-polyfill": "^1.0.5",
+    "event-source-polyfill": "^1.0.31",
     "react-router-dom": "^6.17.0"
   }
 }

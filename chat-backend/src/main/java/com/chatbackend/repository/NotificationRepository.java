@@ -1,8 +1,6 @@
 package com.chatbackend.repository;
 
-import com.chatbackend.enums.NotificationStatus;
 import com.chatbackend.model.Notification;
-import com.chatbackend.model.NotificationKey;
 import com.chatbackend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
