@@ -28,7 +28,7 @@ public class Message {
 
     private Long conversationId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "sender", referencedColumnName = "id")
     private User sender;
 }

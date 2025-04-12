@@ -14,5 +14,5 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
     //List<Notification> findTop10ByNotificationStatusAndRecipientOrderByTimestampAsc(NotificationStatus notificationStatus, User recipient);
 
-    List<Notification> findTop10ByRecipientOrderByTimestampAsc(User recipient);
+    List<Notification> findTop10ByRecipientAndIsDeletedFalseOrderByTimestampAsc(User recipient);
 }

@@ -6,7 +6,7 @@ import { ErrorType } from '../../constants/enums';
 import { FieldError, ProfileData } from '../../constants/types';
 import ImageUploader from './ImageUploader';
 import ProfileInputs from './ProfileInputs';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { useRefreshSignedInUser } from '../../hooks/useRefreshSignedInUser';
 import { useGlobalContext } from '../../store/context/GlobalContext';
 import FriendInteractionButton from '../friend-interaction/FriendInteractionButton';
@@ -31,6 +31,7 @@ const ProfilePage: React.FC = () => {
   const refreshSignedInUser = useRefreshSignedInUser();
   const [isEditDisabled, setIsEditDisabled] = useState<boolean>(false);
   const [currentUrlId, setCurrentUrlId] = useState<string|null>(null);
+  const location = useLocation();
 
   const loadProfileData = async () => {
     await refreshSignedInUser();
@@ -63,6 +64,11 @@ const ProfilePage: React.FC = () => {
     };
     }
   }
+
+  React.useEffect(() => {
+    const urlId = searchParams.get("id");
+    setCurrentUrlId(urlId);
+  }, [location]);
 
   const onFileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

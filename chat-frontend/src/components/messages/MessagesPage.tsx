@@ -10,18 +10,16 @@ import {
 } from '@mui/material';
 
 const MessagesPage = () => {
-  // Dummy mock data
   const conversations = [
     { id: 1, name: 'Alice', lastMessage: 'Hey, how’s it going?' },
     { id: 2, name: 'Bob', lastMessage: 'Got the files?' },
     { id: 3, name: 'Charlie', lastMessage: 'Let’s catch up soon.' },
   ];
 
-  const selectedConversationId = 1; // Replace this with selected ID state
+  const selectedConversationId = 1; 
 
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
-      {/* Sidebar */}
       <Paper
         elevation={2}
         sx={{
@@ -61,7 +59,6 @@ const MessagesPage = () => {
         </List>
       </Paper>
 
-      {/* Conversation Area */}
       <Box sx={{ flex: 1, p: 2, overflow: 'hidden' }}>
         <Paper
           elevation={2}
@@ -75,13 +72,11 @@ const MessagesPage = () => {
           }}
         >
           <Box sx={{ flexGrow: 1, overflowY: 'auto', mb: 2 }}>
-            {/* Placeholder for message bubbles */}
             <Typography variant="body2" color="text.secondary">
               Conversation with Alice goes here...
             </Typography>
           </Box>
 
-          {/* Input area could go here later */}
         </Paper>
       </Box>
     </Box>

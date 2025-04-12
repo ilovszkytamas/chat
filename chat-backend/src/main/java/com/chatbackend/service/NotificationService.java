@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,11 +23,18 @@ public class NotificationService {
     private final UserRepository userRepository;
 
     public List<Notification> getRecentNotifications(final User user) {
-        return notificationRepository.findTop10ByRecipientOrderByTimestampAsc(user);
+        return notificationRepository.findTop10ByRecipientAndIsDeletedFalseOrderByTimestampAsc(user);
     }
 
-    public Notification setNotificationStatus(final Notification notification, final NotificationStatus notificationStatus) {
+    public Notification setNotificationStatus(final Long notificationId, final NotificationStatus notificationStatus) {
+        final Notification notification = notificationRepository.findById(notificationId).get();
         notification.setNotificationStatus(notificationStatus);
+        return notificationRepository.save(notification);
+    }
+
+    public Notification deleteNotification(final Long notificationId) {
+        final Notification notification = notificationRepository.findById(notificationId).get();
+        notification.setDeleted(true);
         return notificationRepository.save(notification);
     }
 

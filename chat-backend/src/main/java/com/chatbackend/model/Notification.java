@@ -5,7 +5,6 @@ import com.chatbackend.enums.NotificationStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,11 +31,11 @@ public class Notification {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "recipient_id", referencedColumnName = "id")
     private User recipient;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "sender_id", referencedColumnName = "id")
     private User sender;
 
@@ -47,4 +46,5 @@ public class Notification {
     private NotificationEventType notificationEventType;
 
     private Timestamp timestamp;
+    private boolean isDeleted;
 }

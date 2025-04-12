@@ -13,6 +13,7 @@ export interface ProfileData {
 }
 
 export interface Notification {
+  id: number;
   senderId: number,
   recipientId: number,
   message: string,

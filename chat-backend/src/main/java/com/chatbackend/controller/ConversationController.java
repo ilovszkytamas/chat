@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/friend")
+@RequestMapping("/conversation")
 public class ConversationController {
 }

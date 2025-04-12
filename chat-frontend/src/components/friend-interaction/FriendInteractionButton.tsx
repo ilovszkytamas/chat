@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import API from '../../config/api';
 import { FriendRelation } from '../../constants/enums';
-import { Button } from '@mui/material';
+import { Button, ButtonProps, Stack, Tooltip } from '@mui/material';
 
 interface Props {
   hidden: boolean;
@@ -42,6 +42,23 @@ const FriendInteractionButton: React.FC<Props> = (props) => {
     setRelation(data);
   }
 
+  const sendMessage = () => {
+
+  }
+
+  const renderButton = (text: string, onClick: () => void, color: ButtonProps['color']) => (
+    <Tooltip title={text}>
+      <Button
+        variant="contained"
+        color={color}
+        onClick={onClick}
+        sx={{ width: '100%', marginBottom: 1 }}
+      >
+        {text}
+      </Button>
+    </Tooltip>
+  );
+
   if (hidden || !id) {
     return null;
   }
@@ -49,21 +66,21 @@ const FriendInteractionButton: React.FC<Props> = (props) => {
   switch(relation) {
     case FriendRelation.NONE: 
     case FriendRelation.REJECTED: {
-      return <Button onClick={addFriend}>Add Friend</Button>
+      return renderButton('Add Friend', addFriend, 'primary');
     }
     case FriendRelation.PENDING_SENDER: {
-      return <Button onClick={cancelFriendRequest}>Cancel request</Button>
+      return renderButton('Cancel request', cancelFriendRequest, 'secondary');
     }
     case FriendRelation.PENDING_RECIPIENT: {
       return (
-      <React.Fragment>
-        <Button onClick={acceptFriendRequest}>Accept</Button>
-        <Button onClick={cancelFriendRequest}>Reject</Button>
-      </React.Fragment>
-      )
+        <Stack spacing={2}>
+          {renderButton('Accept', acceptFriendRequest, 'primary')}
+          {renderButton('Reject', cancelFriendRequest, 'error')}
+        </Stack>
+      );
     }
-    case FriendRelation.PENDING_SENDER: {
-      return <Button onClick={cancelFriendRequest}>Delete Friend</Button>
+    case FriendRelation.ACCEPTED: {
+      return renderButton('Send Message', sendMessage, 'primary');
     }
     default: return null;
   }
