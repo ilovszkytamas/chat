@@ -20,3 +20,9 @@ export interface Notification {
   senderFullName: string,
   notificationStatus: NotificationStatus
 }
+
+export interface Friend {
+  id: number,
+  name: string,
+  online: boolean
+}

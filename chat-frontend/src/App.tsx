@@ -9,7 +9,7 @@ import Header from "./components/header/Header";
 
 function App() {
   return (
-    <div className="App" style={{ height: '100vh', width: '100vw' }}>
+    <div className="App" style={{ height: '100vh', overflow: 'hidden' }}>
       <GlobalContextProvider>
         <BrowserRouter>
           <Routes>

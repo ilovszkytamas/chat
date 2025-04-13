@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { GlobalContextType, GlobalState, defaultState } from '../types/types';
+import { GlobalContextType, defaultState } from '../types/types';
 import { globalReducer } from '../reducer/GlobalReducer';
 
 

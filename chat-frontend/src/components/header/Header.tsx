@@ -7,22 +7,23 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import UserSearch from './UserSearch';
 import Notifications from './Notifications';
-import { MailOutline } from '@mui/icons-material';
+import { AccountCircle, MailOutline } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { Avatar } from '@mui/material';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar 
-        position="static" 
+      <AppBar
+        position="static"
         elevation={1}
-        sx={{ 
-          maxHeight: 70, 
-          justifyContent: 'center', 
-          px: 2, 
-          backgroundColor: 'primary.main' 
+        sx={{
+          maxHeight: 70,
+          justifyContent: 'center',
+          px: 2,
+          backgroundColor: 'primary.main'
         }}
       >
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
@@ -45,7 +46,31 @@ const Header: React.FC = () => {
             <IconButton color="inherit" aria-label="messages" onClick={() => navigate("/messages")}>
               <MailOutline />
             </IconButton>
-            <Button color="inherit" variant="outlined" sx={{ borderColor: 'white', color: 'white' }}>
+            <Box gap={1}>
+              <IconButton color="inherit">
+                <Avatar 
+                  src="/blank-profile-picture.jpeg" 
+                  alt="User Avatar" 
+                  sx={{ width: 40, height: 40 }}
+                />
+              </IconButton>
+            </Box>
+            <Button
+              color="inherit"
+              variant="outlined"
+              sx={{
+                borderColor: 'white',
+                color: 'white',
+                borderRadius: 20,
+                paddingX: 2,
+                paddingY: 1,
+                '&:hover': {
+                  borderColor: 'white',
+                  backgroundColor: 'white',
+                  color: 'primary.main',
+                },
+              }}
+            >
               Logout
             </Button>
           </Box>

@@ -9,7 +9,7 @@ import ProfileInputs from './ProfileInputs';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useRefreshSignedInUser } from '../../hooks/useRefreshSignedInUser';
 import { useGlobalContext } from '../../store/context/GlobalContext';
-import FriendInteractionButton from '../friend-interaction/FriendInteractionButton';
+import FriendInteractionButton from './FriendInteractionButton';
 
 const ProfilePage: React.FC = () => {
   const { state } = useGlobalContext()

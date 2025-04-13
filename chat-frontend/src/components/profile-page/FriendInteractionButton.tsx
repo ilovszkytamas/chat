@@ -43,7 +43,7 @@ const FriendInteractionButton: React.FC<Props> = (props) => {
   }
 
   const sendMessage = () => {
-
+    // this will call the conversation controller on the backend to get or create the conversation with the user
   }
 
   const renderButton = (text: string, onClick: () => void, color: ButtonProps['color']) => (

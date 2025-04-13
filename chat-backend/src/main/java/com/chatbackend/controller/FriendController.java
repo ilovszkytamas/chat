@@ -1,5 +1,6 @@
 package com.chatbackend.controller;
 
+import com.chatbackend.dto.response.FriendDTO;
 import com.chatbackend.enums.FriendRelation;
 import com.chatbackend.model.Friend;
 import com.chatbackend.model.User;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -41,7 +43,7 @@ public class FriendController {
     }
 
     @GetMapping("/list")
-    public Set<Friend> getFriendList(final @AuthenticationPrincipal User user) {
+    public List<FriendDTO> getFriendList(final @AuthenticationPrincipal User user) {
         return friendService.getFriendList(user);
     }
 }

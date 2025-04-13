@@ -1,5 +1,6 @@
 package com.chatbackend.service;
 
+import com.chatbackend.dto.response.FriendDTO;
 import com.chatbackend.enums.FriendRelation;
 import com.chatbackend.enums.NotificationEventType;
 import com.chatbackend.model.Friend;
@@ -7,10 +8,11 @@ import com.chatbackend.model.User;
 import com.chatbackend.repository.FriendRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +21,7 @@ public class FriendService {
     private final UserService userService;
     private final FriendRepository friendRepository;
     private final NotificationService notificationService;
+    private final ConversionService conversionService;
 
     public FriendRelation getFriendRelation(final User currentUser, final Long otherUserId) {
         final User otherUser = userService.getUserById(otherUserId);
@@ -114,7 +117,9 @@ public class FriendService {
         return FriendRelation.ACCEPTED;
     }
 
-    public Set<Friend> getFriendList(final User user) {
-        return userService.getUserById(user.getId()).getFriends();
+    public List<FriendDTO> getFriendList(final User user) {
+        final List<Friend> friendList = friendRepository.findByOwnerAndFriendRelation(user, FriendRelation.ACCEPTED);
+
+        return friendList.stream().map(friend -> conversionService.convert(friend, FriendDTO.class)).toList();
     }
 }
