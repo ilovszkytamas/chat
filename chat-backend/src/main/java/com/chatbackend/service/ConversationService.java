@@ -1,5 +1,6 @@
 package com.chatbackend.service;
 
+import com.chatbackend.dto.response.ConversationDTO;
 import com.chatbackend.model.Conversation;
 import com.chatbackend.model.ConversationParticipant;
 import com.chatbackend.model.User;
@@ -36,8 +37,10 @@ public class ConversationService {
         }
     }
 
-    public List<Conversation> getConversationsForUser(final User user) {
-        return conversationRepository.findAllByUser(user.getId());
+    public List<ConversationDTO> getConversationsForUser(final User user) {
+        final List<Conversation> conversations = conversationRepository.findAllByUser(user.getId());
+
+        return mapConversationToConversationDTO(user, conversations);
     }
 
     private List<ConversationParticipant> createAndSaveParticipants(User user1, User user2, Conversation conversation) {
@@ -52,5 +55,23 @@ public class ConversationService {
                 .conversation(conversation)
                 .build();
         return conversationParticipantRepository.saveAll(List.of(participant1, participant2));
+    }
+
+    private List<ConversationDTO> mapConversationToConversationDTO(final User user, final List<Conversation> conversations) {
+        return conversations.stream()
+                .map(conversation -> {
+                    final String partnerName = conversation.getParticipants().stream()
+                            .filter(participant -> !participant.getUser().getId().equals(user.getId()))
+                            .map(participant -> participant.getUser().getFirstName() + " " + participant.getUser().getLastName())
+                            .findFirst()
+                            .orElse("Unknown");
+
+                    return ConversationDTO.builder()
+                            .id(conversation.getId())
+                            .partnerName(partnerName)
+                            .lastMessage("TestMessage")
+                            .build();
+                })
+                .toList();
     }
 }

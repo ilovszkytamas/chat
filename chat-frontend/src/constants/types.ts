@@ -22,7 +22,20 @@ export interface Notification {
 }
 
 export interface Friend {
-  id: number,
+  friendId: number,
   name: string,
   online: boolean
 }
+
+export interface Conversation {
+  id: number,
+  partnerName: string,
+  lastMessage: string
+}
+
+export interface Message {
+  id: number;
+  senderId: number;
+  content: string;
+  createdAt: string;
+};

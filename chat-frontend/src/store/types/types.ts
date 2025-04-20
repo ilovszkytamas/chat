@@ -1,5 +1,5 @@
 
-import { Friend, ProfileData } from "../../constants/types";
+import { Conversation, Friend, ProfileData } from "../../constants/types";
 import { GlobalAction } from "../actions/GlobalAction";
 import { MessageAction } from "../actions/MessageAction";
 
@@ -32,21 +32,13 @@ export type GlobalReducerType = {
 
 export type MessageState = {
   selectedConversationId: number | null;
-  conversations: Array<{
-    id: number;
-    name: string;
-    lastMessage: string;
-  }>;
+  conversations: Conversation[]
   friendList: Friend[]
 };
 
 export const defaultMessageState: MessageState = {
   selectedConversationId: null,
-  conversations: [
-    { id: 1, name: 'Alice', lastMessage: 'Hey, how’s it going?' },
-    { id: 2, name: 'Bob', lastMessage: 'Got the files?' },
-    { id: 3, name: 'Charlie', lastMessage: 'Let’s catch up soon.' },
-  ],
+  conversations: [],
   friendList: []
 };
 

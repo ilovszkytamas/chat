@@ -1,5 +1,6 @@
 package com.chatbackend.controller;
 
+import com.chatbackend.dto.response.ConversationDTO;
 import com.chatbackend.model.Conversation;
 import com.chatbackend.model.User;
 import com.chatbackend.service.ConversationService;
@@ -20,13 +21,13 @@ public class ConversationController {
     private final ConversationService conversationService;
 
     @PutMapping("/{partnerId}")
-    public Long getOrCreateConversion(final @AuthenticationPrincipal User user, final @PathVariable Long id) {
+    public Long getOrCreateConversion(final @AuthenticationPrincipal User user, final @PathVariable Long partnerId) {
 
-        return conversationService.getOrCreateConversation(user, id);
+        return conversationService.getOrCreateConversation(user, partnerId);
     }
 
     @GetMapping
-    public List<Conversation> getConversationsForUser(final @AuthenticationPrincipal User user) {
+    public List<ConversationDTO> getConversationsForUser(final @AuthenticationPrincipal User user) {
 
         return conversationService.getConversationsForUser(user);
     }

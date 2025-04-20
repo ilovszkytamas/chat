@@ -9,7 +9,8 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { MessageContext } from '../../store/context/MessageContext';
-import { setSelectedConversationId } from '../../store/actions/MessageAction';
+import { setConversations, setSelectedConversationId } from '../../store/actions/MessageAction';
+import API from '../../config/api';
 
 const ConversationList: React.FC = () => {
   const { state, dispatch } = React.useContext(MessageContext);
@@ -18,6 +19,16 @@ const ConversationList: React.FC = () => {
   const setSelectedConversation = (id: number) => {
     dispatch(setSelectedConversationId(id));
   }
+
+  const loadConversationList = async () => {
+    const conversationList = (await API.get("/conversation")).data;
+    console.log(conversationList);
+    dispatch(setConversations(conversationList));
+  }
+
+  React.useEffect(() => {
+    loadConversationList();
+  }, []);
 
   return (
     <Paper
@@ -45,7 +56,7 @@ const ConversationList: React.FC = () => {
           >
             <ListItemButton>
               <ListItemText
-                primary={conv.name}
+                primary={conv.partnerName}
                 secondary={conv.lastMessage}
                 primaryTypographyProps={{ fontWeight: 500 }}
                 secondaryTypographyProps={{

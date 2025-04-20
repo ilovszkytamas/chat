@@ -14,9 +14,15 @@ const FriendList: React.FC = () => {
     console.log(friendList);
     dispatch(setFriendList(friendList));
   }
+
   React.useEffect(() => {
     loadFriendList();
   }, []);
+
+  const openConversation = async (partnerId: number) => {
+    const conversationId = (await API.put(`/conversation/${partnerId}`)).data;
+    console.log(conversationId);
+  }
 
   return (
     <Paper
@@ -36,7 +42,7 @@ const FriendList: React.FC = () => {
       <Divider />
       <List sx={{ overflowY: 'auto' }}>
         {friendList.map((friend) => (
-          <ListItem key={friend.id} disablePadding>
+          <ListItem key={friend.friendId} disablePadding>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <ListItemText
@@ -47,7 +53,7 @@ const FriendList: React.FC = () => {
                   <Circle sx={{ color: 'green', fontSize: 10, mr: 1 }} />
                 )}
               </Box>
-              <IconButton edge="end" aria-label="message" size="small">
+              <IconButton edge="end" aria-label="message" size="small" onClick={() => openConversation(friend.friendId)}>
                 <ChatBubbleOutline />
               </IconButton>
             </Box>

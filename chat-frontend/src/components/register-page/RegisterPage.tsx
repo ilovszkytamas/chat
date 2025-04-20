@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { ErrorMessage, ErrorType } from '../../constants/enums';
 import { EMAIL_REGEX } from '../../constants/constants';
@@ -49,7 +49,7 @@ const RegisterPage: React.FC = () => {
         errorMessage: ErrorMessage.EMAIL_BLANK
       })
     }
-    if (EMAIL_REGEX.test(credentials.email)) {
+    if (!EMAIL_REGEX.test(credentials.email)) {
       fieldErrors.push({
         fieldName: "email",
         errorMessage: ErrorMessage.EMAIL_FORMAT
@@ -99,62 +99,93 @@ const RegisterPage: React.FC = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      minHeight="100vh">
-      <Grid2 container direction={"column"} spacing={2}>
-      <Grid2>
-        <TextField
-          type="email"
-          name="email"
-          label="Email"
-          value={credentials.email}
-          onChange={handleChange}
-          error={!!fieldErrors?.find((e) => e.fieldName === "email")}
-          helperText={fieldErrors?.find((e) => e.fieldName === "email")?.errorMessage}
-        />
-      </Grid2>
-      <Grid2>
-      <TextField
-        type="text"
-        name="firstName"
-        label="First Name"
-        value={credentials.firstName}
-        onChange={handleChange}
-        error={!!fieldErrors?.find((e) => e.fieldName === "firstName")}
-        helperText={fieldErrors?.find((e) => e.fieldName === "firstName")?.errorMessage}
-      />
-      </Grid2>
-      <Grid2>
-      <TextField
-        type="text"
-        name="lastName"
-        label="Last Name"
-        value={credentials.lastName}
-        onChange={handleChange}
-        error={!!fieldErrors?.find((e) => e.fieldName === "lastName")}
-        helperText={fieldErrors?.find((e) => e.fieldName === "lastName")?.errorMessage}
-      />
-      </Grid2>
-      <Grid2>
-      <TextField
-        type="password"
-        name="password"
-        label="Password"
-        value={credentials.password}
-        onChange={handleChange}
-        error={!!fieldErrors?.find((e) => e.fieldName === "password")}
-        helperText={fieldErrors?.find((e) => e.fieldName === "password")?.errorMessage}
-      />
-      </Grid2>
-      <Grid2>
-        <Button type='button' onClick={handleSubmit}>Register</Button>
-      </Grid2>
-      <Grid2>
-        <Button type="button" onClick={navigateToLogin}>Already have an account?</Button>
-      </Grid2>
-      <Grid2>
-        <Typography style={{display: hasError ? "block" : "none", color: "red" }}>User already exists</Typography>
-      </Grid2>
-    </Grid2>
+      minHeight="100vh"
+      bgcolor="#f5f5f5"
+      p={2}
+    >
+      <Paper elevation={3} sx={{ p: 4, borderRadius: 3, minWidth: 350 }}>
+        <Typography variant="h5" mb={3} textAlign="center">
+          Register
+        </Typography>
+        <Grid2 container direction="column" spacing={2}>
+          <Grid2>
+            <TextField
+              type="email"
+              name="email"
+              label="Email"
+              fullWidth
+              value={credentials.email}
+              onChange={handleChange}
+              error={!!fieldErrors?.find((e) => e.fieldName === "email")}
+              helperText={fieldErrors?.find((e) => e.fieldName === "email")?.errorMessage}
+            />
+          </Grid2>
+          <Grid2>
+            <TextField
+              type="text"
+              name="firstName"
+              label="First Name"
+              fullWidth
+              value={credentials.firstName}
+              onChange={handleChange}
+              error={!!fieldErrors?.find((e) => e.fieldName === "firstName")}
+              helperText={fieldErrors?.find((e) => e.fieldName === "firstName")?.errorMessage}
+            />
+          </Grid2>
+          <Grid2>
+            <TextField
+              type="text"
+              name="lastName"
+              label="Last Name"
+              fullWidth
+              value={credentials.lastName}
+              onChange={handleChange}
+              error={!!fieldErrors?.find((e) => e.fieldName === "lastName")}
+              helperText={fieldErrors?.find((e) => e.fieldName === "lastName")?.errorMessage}
+            />
+          </Grid2>
+          <Grid2>
+            <TextField
+              type="password"
+              name="password"
+              label="Password"
+              fullWidth
+              value={credentials.password}
+              onChange={handleChange}
+              error={!!fieldErrors?.find((e) => e.fieldName === "password")}
+              helperText={fieldErrors?.find((e) => e.fieldName === "password")?.errorMessage}
+            />
+          </Grid2>
+          <Grid2>
+            <Button
+              type="button"
+              variant="contained"
+              fullWidth
+              onClick={handleSubmit}
+              sx={{ borderRadius: 2 }}
+            >
+              Register
+            </Button>
+          </Grid2>
+          <Grid2>
+            <Button
+              type="button"
+              variant="text"
+              fullWidth
+              onClick={navigateToLogin}
+            >
+              Already have an account?
+            </Button>
+          </Grid2>
+          <Grid2>
+            <Typography
+              sx={{ color: "red", textAlign: "center", display: hasError ? "block" : "none" }}
+            >
+              User already exists
+            </Typography>
+          </Grid2>
+        </Grid2>
+      </Paper>
     </Box>
   );
 };

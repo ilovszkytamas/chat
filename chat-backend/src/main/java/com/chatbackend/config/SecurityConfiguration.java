@@ -37,7 +37,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request.requestMatchers("/auth/**")
-                        .permitAll().anyRequest().authenticated())
+                        .permitAll()
+                        .requestMatchers("/chat/**").permitAll()
+                        .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -67,6 +69,7 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.addAllowedOrigin("http://localhost:3000");

@@ -1,4 +1,4 @@
-import { Friend } from "../../constants/types"
+import { Conversation, Friend } from "../../constants/types"
 
 export enum MessageAction {
   SET_SELECTED_CONVERSATION = "SET_SELECTED_CONVERSATION",
@@ -11,7 +11,7 @@ export const setSelectedConversationId = (payload: number) => ({
   payload
 })
 
-export const setConversations = (payload: any) => ({
+export const setConversations = (payload: Conversation[]) => ({
   type: MessageAction.SET_CONVERSATIONS,
   payload
 })

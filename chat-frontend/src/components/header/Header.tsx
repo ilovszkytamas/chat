@@ -47,7 +47,7 @@ const Header: React.FC = () => {
               <MailOutline />
             </IconButton>
             <Box gap={1}>
-              <IconButton color="inherit">
+              <IconButton color="inherit" onClick={() => navigate("/profile")}>
                 <Avatar 
                   src="/blank-profile-picture.jpeg" 
                   alt="User Avatar" 

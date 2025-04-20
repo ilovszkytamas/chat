@@ -6,12 +6,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,4 +35,12 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "sender_id", referencedColumnName = "id")
     private User sender;
+
+    private String content;
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    private void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

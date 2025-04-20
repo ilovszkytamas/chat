@@ -8,9 +8,13 @@ const MessagesPage: React.FC = () => {
 
   return (
     <MessageContextProvider>
-      <Box sx={{ display: 'flex', height: '100vh' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
         <ConversationList />
-        <CurrentConversation />
+
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <CurrentConversation />
+        </Box>
+
         <FriendList />
       </Box>
     </MessageContextProvider>
