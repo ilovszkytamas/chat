@@ -6,10 +6,10 @@ import { fillProfileData } from '../store/actions/GlobalAction';
 export const useRefreshSignedInUser = () => {
   const { dispatch } = useGlobalContext();
   const refreshSignedInUser = async () => {
-
     const profileData = await API.get("/user/current");
     const { data } = profileData;
-    dispatch(fillProfileData(data))
+    dispatch(fillProfileData(data));
+    return data;
   }
 
   return refreshSignedInUser;

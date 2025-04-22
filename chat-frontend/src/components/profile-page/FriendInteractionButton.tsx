@@ -79,9 +79,6 @@ const FriendInteractionButton: React.FC<Props> = (props) => {
         </Stack>
       );
     }
-    case FriendRelation.ACCEPTED: {
-      return renderButton('Send Message', sendMessage, 'primary');
-    }
     default: return null;
   }
 }

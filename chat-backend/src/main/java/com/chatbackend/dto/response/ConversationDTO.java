@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ConversationDTO {
     private Long id;
+    private Long partnerId;
     private String partnerName;
     private String lastMessage;
 }

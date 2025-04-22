@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Paper, Stack, TextField, Typography } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { useRefreshSignedInUser } from '../../hooks/useRefreshSignedInUser';
 
 const LoginPage: React.FC = () => {
@@ -35,9 +34,6 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  const navigateToRegister = (): void => {
-    navigate("/register");
-  }
 //TODO correct input types later
 return (
   <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="#f5f5f5">

@@ -29,6 +29,7 @@ export interface Friend {
 
 export interface Conversation {
   id: number,
+  partnerId: number,
   partnerName: string,
   lastMessage: string
 }

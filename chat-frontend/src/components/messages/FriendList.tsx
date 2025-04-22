@@ -1,14 +1,16 @@
-import { ChatBubbleOutline, Circle } from '@mui/icons-material';
+import { ChatBubbleOutline, Circle, Person } from '@mui/icons-material';
 import { Paper, Typography, List, ListItem, ListItemText, Divider, IconButton, Box } from '@mui/material';
 import React from 'react';
 import { MessageContext } from '../../store/context/MessageContext';
 import API from '../../config/api';
 import { setFriendList } from '../../store/actions/MessageAction';
+import { useNavigate } from 'react-router-dom';
 
 const FriendList: React.FC = () => {
   const { state, dispatch } = React.useContext(MessageContext);
   const { friendList } = state;
-  
+  const navigate = useNavigate();
+
   const loadFriendList = async () => {
     const friendList = (await API.get("/friend/list")).data;
     console.log(friendList);
@@ -53,9 +55,24 @@ const FriendList: React.FC = () => {
                   <Circle sx={{ color: 'green', fontSize: 10, mr: 1 }} />
                 )}
               </Box>
-              <IconButton edge="end" aria-label="message" size="small" onClick={() => openConversation(friend.friendId)}>
-                <ChatBubbleOutline />
-              </IconButton>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                <IconButton
+                  edge="end"
+                  aria-label="profile"
+                  size="small"
+                  onClick={() => navigate(`/profile?id=${friend.friendId}`)}
+                >
+                  <Person fontSize="small" />
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  aria-label="message"
+                  size="small"
+                  onClick={() => openConversation(friend.friendId)}
+                >
+                  <ChatBubbleOutline fontSize="small" />
+                </IconButton>
+              </Box>
             </Box>
           </ListItem>
         ))}

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import API from '../../config/api';
 import { Button } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
@@ -12,17 +12,15 @@ import { useGlobalContext } from '../../store/context/GlobalContext';
 import FriendInteractionButton from './FriendInteractionButton';
 
 const ProfilePage: React.FC = () => {
-  const { state } = useGlobalContext()
-  const { signedInUser } = state;
+  const { state } = useGlobalContext();
   const [profileData, setProfileData] = useState<ProfileData>({
     id: null,
     email: '',
     firstName: '',
     lastName: ''
   });
-  const [profileDataLoaded, setProfileDataLoaded] = useState<boolean>(false);
-  const [fieldErrors, setFieldErrors] = useState<FieldError[]>([])
-  const [hasError, setHasError] = useState<boolean>(false)
+  const [fieldErrors, setFieldErrors] = useState<FieldError[]>([]);
+  const [hasError, setHasError] = useState<boolean>(false);
   const [image, setImage] = useState<any>();
   const [imageChanged, setImageChanged] = useState<boolean>(false);
   const [uploadableImage, setUploadableImage] = useState<any>();
@@ -30,60 +28,61 @@ const ProfilePage: React.FC = () => {
   const [searchParams, _] = useSearchParams();
   const refreshSignedInUser = useRefreshSignedInUser();
   const [isEditDisabled, setIsEditDisabled] = useState<boolean>(false);
-  const [currentUrlId, setCurrentUrlId] = useState<string|null>(null);
+  const [currentUrlId, setCurrentUrlId] = useState<string | null>(null);
   const location = useLocation();
 
   const loadProfileData = async () => {
-    await refreshSignedInUser();
     const urlId = searchParams.get("id");
     setCurrentUrlId(urlId);
-    if (!currentUrlId || currentUrlId === signedInUser.id?.toString()) {
-      setProfileData(signedInUser);
-      setProfileDataLoaded(true);
+    const currentUser = await refreshSignedInUser();
+    console.log(urlId, currentUser.id?.toString())
+    if (!urlId || urlId === currentUser.id?.toString()) {
+      setProfileData(currentUser);
       setIsEditDisabled(false);
     } else {
       const response = await API.get(`/user/${urlId}`);
       const { data } = response;
       setProfileData(data);
-      setProfileDataLoaded(true);
       setIsEditDisabled(true);
     }
-  }
+  };
 
   const loadProfileImage = async () => {
-    if (false) {
-      const response = await API.get("/img/profile/" + profileData.id, {
-        responseType: "blob"
+    if (!profileData.id) return;
+  
+    try {
+      const response = await API.get(`/img/profile/${profileData.id}`, {
+        responseType: "blob",
       });
       const { data } = response;
-      let reader = new FileReader();
+  
+      const reader = new FileReader();
       reader.readAsDataURL(data);
-      reader.onload = function () {
-      let imageDataUrl = reader.result;
-      setImage(imageDataUrl);
-    };
+  
+      reader.onload = () => {
+        setImage(reader.result);
+      };
+  
+      reader.onerror = () => {
+        setImage("/blank-profile-picture.jpeg");
+      };
+    } catch (error) {
+      setImage("/blank-profile-picture.jpeg");
     }
-  }
-
-  React.useEffect(() => {
-    const urlId = searchParams.get("id");
-    setCurrentUrlId(urlId);
-  }, [location]);
+  };
 
   const onFileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    console.log(e?.target?.files)
-    if (e.target) {
-      const file = e?.target?.files!![0];
-      if (file.type === "image/png" || file.type === "image/jpeg") {
-        const fileAsUrl = URL.createObjectURL(file);
+    const file = e?.target?.files?.[0];
+    if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
+      const fileAsUrl = URL.createObjectURL(file);
       setImage(fileAsUrl);
       setImageChanged(true);
       setUploadableImage(file);
-      // TODO: add proper error 
-      } else console.log("Pic upload error")
+    } else {
+      console.log("Pic upload error");
     }
-};
+  };
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setProfileData({
@@ -92,35 +91,37 @@ const ProfilePage: React.FC = () => {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     loadProfileData();
-    if (profileDataLoaded) {
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (profileData.id && !image) {
       loadProfileImage();
     }
-  }, [profileDataLoaded])
-
-  
+  }, [profileData]);
 
   const submitChanges = async () => {
     if (inputRef.current.validateFields()) {
       try {
-        const response = await API.post('/user/current', {...profileData});
-        console.log(response)
+        const response = await API.post('/user/current', { ...profileData });
+        console.log(response);
       } catch (error: any) {
         const { data } = error?.response;
         if (data?.errorType === ErrorType.FIELD) {
-          setFieldErrors(data.fieldErrors)
+          setFieldErrors(data.fieldErrors);
         } else {
-          setHasError(true)
+          setHasError(true);
         }
       }
     }
+
     if (!hasError && imageChanged) {
-    const formData = new FormData();
-    formData.append('file', uploadableImage);
-    formData.append('type', uploadableImage.type)
-    const response = await API.post('/img/upload', formData);
-    console.log(response)
+      const formData = new FormData();
+      formData.append('file', uploadableImage);
+      formData.append('type', uploadableImage.type);
+      const response = await API.post('/img/upload', formData);
+      console.log(response);
     }
   };
 
@@ -168,6 +169,6 @@ const ProfilePage: React.FC = () => {
       </Grid2>
     </Grid2>
   );
-}
+};
 
 export default ProfilePage;

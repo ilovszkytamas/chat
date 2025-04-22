@@ -4,6 +4,7 @@ import com.chatbackend.dto.websocket.ChatMessage;
 import com.chatbackend.model.User;
 import com.chatbackend.service.MessageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -15,6 +16,7 @@ import java.security.Principal;
 @Controller
 @RequiredArgsConstructor
 public class ChatWebSocketController {
+    private final ConversionService conversionService;
     private final MessageService messageService;
 
     @MessageMapping("/conversation.{conversationId}")
@@ -27,9 +29,6 @@ public class ChatWebSocketController {
 
         User user = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
 
-        message.setSenderId(user.getId());
-
-        messageService.saveChatMessage(message, user);
-        return message;
+        return conversionService.convert(messageService.saveChatMessage(message, user), ChatMessage.class);
     }
 }

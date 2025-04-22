@@ -11,6 +11,7 @@ import React from 'react';
 import { MessageContext } from '../../store/context/MessageContext';
 import { setConversations, setSelectedConversationId } from '../../store/actions/MessageAction';
 import API from '../../config/api';
+import ProfileAvatar from '../common/ProfileAvatar';
 
 const ConversationList: React.FC = () => {
   const { state, dispatch } = React.useContext(MessageContext);
@@ -55,6 +56,7 @@ const ConversationList: React.FC = () => {
             onClick={() => setSelectedConversation(conv.id)}
           >
             <ListItemButton>
+              <ProfileAvatar userId={conv.partnerId} size={40} />
               <ListItemText
                 primary={conv.partnerName}
                 secondary={conv.lastMessage}

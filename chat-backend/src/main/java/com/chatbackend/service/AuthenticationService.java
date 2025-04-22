@@ -32,7 +32,7 @@ public class AuthenticationService {
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
             .role(Role.USER)
-            .imageLocation("/static/images/Default.jpg").build();
+            .imageLocation("/uploads/images/Default.jpg").build();
         Optional<User> existingUser = userRepository.getUserByEmail(request.getEmail());
         if (existingUser.isPresent()) {
             throw new Exception("User already exists");

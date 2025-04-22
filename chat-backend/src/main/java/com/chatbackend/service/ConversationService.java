@@ -60,14 +60,22 @@ public class ConversationService {
     private List<ConversationDTO> mapConversationToConversationDTO(final User user, final List<Conversation> conversations) {
         return conversations.stream()
                 .map(conversation -> {
-                    final String partnerName = conversation.getParticipants().stream()
-                            .filter(participant -> !participant.getUser().getId().equals(user.getId()))
-                            .map(participant -> participant.getUser().getFirstName() + " " + participant.getUser().getLastName())
-                            .findFirst()
+                    final Optional<User> partner = conversation.getParticipants().stream()
+                            .map(ConversationParticipant::getUser)
+                            .filter(u -> !u.getId().equals(user.getId()))
+                            .findFirst();
+
+                    final String partnerName = partner
+                            .map(u -> u.getFirstName() + " " + u.getLastName())
                             .orElse("Unknown");
+
+                    final Long partnerId = partner
+                            .map(User::getId)
+                            .orElse(null);
 
                     return ConversationDTO.builder()
                             .id(conversation.getId())
+                            .partnerId(partnerId)
                             .partnerName(partnerName)
                             .lastMessage("TestMessage")
                             .build();

@@ -7,12 +7,16 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import UserSearch from './UserSearch';
 import Notifications from './Notifications';
-import { AccountCircle, MailOutline } from '@mui/icons-material';
+import { MailOutline } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { Avatar } from '@mui/material';
+import { useGlobalContext } from '../../store/context/GlobalContext';
+import ProfileAvatar from '../common/ProfileAvatar';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
+  const { state } = useGlobalContext();
+  const { signedInUser } = state;
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -47,12 +51,8 @@ const Header: React.FC = () => {
               <MailOutline />
             </IconButton>
             <Box gap={1}>
-              <IconButton color="inherit" onClick={() => navigate("/profile")}>
-                <Avatar 
-                  src="/blank-profile-picture.jpeg" 
-                  alt="User Avatar" 
-                  sx={{ width: 40, height: 40 }}
-                />
+              <IconButton color="inherit" onClick={() => navigate(`/profile?id=${signedInUser.id}`)}>
+                <ProfileAvatar size={40} />
               </IconButton>
             </Box>
             <Button
