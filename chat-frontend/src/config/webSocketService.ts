@@ -1,7 +1,7 @@
 import { Client, IMessage } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
-const WEBSOCKET_URL = 'http://localhost:8080/chat';
+const WEBSOCKET_URL = 'http://localhost:8083/chat';
 
 class WebSocketService {
   private activeSubscriptions: { [key: string]: () => void } = {};

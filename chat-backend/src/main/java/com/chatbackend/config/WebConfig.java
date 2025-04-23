@@ -1,7 +1,6 @@
 package com.chatbackend.config;
 
 import com.chatbackend.converter.FriendToFriendDTOConverter;
-import com.chatbackend.converter.MessageToChatMessageConverter;
 import com.chatbackend.converter.MessageToMessageDTOConverter;
 import com.chatbackend.converter.NotificationToNotificationDTOConverter;
 import com.chatbackend.converter.UserToUserDTOConverter;
@@ -18,7 +17,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addConverter(new NotificationToNotificationDTOConverter());
         registry.addConverter(new FriendToFriendDTOConverter());
         registry.addConverter(new MessageToMessageDTOConverter());
-        registry.addConverter(new MessageToChatMessageConverter());
     }
 
     @Override

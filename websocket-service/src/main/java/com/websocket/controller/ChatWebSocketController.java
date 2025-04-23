@@ -1,13 +1,13 @@
-package com.chatbackend.controller;
+package com.websocket.controller;
 
-import com.chatbackend.dto.websocket.ChatMessage;
-import com.chatbackend.model.User;
-import com.chatbackend.service.MessageService;
+import com.websocket.dto.websocket.ChatMessage;
+import com.websocket.model.User;
+import com.websocket.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 

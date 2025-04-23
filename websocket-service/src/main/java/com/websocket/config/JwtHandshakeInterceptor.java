@@ -1,14 +1,13 @@
-package com.chatbackend.config;
+package com.websocket.config;
 
-import com.chatbackend.service.JwtService;
-import com.chatbackend.service.UserService;
+import com.websocket.service.JwtService;
+import com.websocket.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;

@@ -1,7 +1,7 @@
-package com.chatbackend.converter;
+package com.websocket.converter;
 
-import com.chatbackend.dto.websocket.ChatMessage;
-import com.chatbackend.model.Message;
+import com.websocket.dto.websocket.ChatMessage;
+import com.websocket.model.Message;
 import org.springframework.core.convert.converter.Converter;
 
 public class MessageToChatMessageConverter implements Converter<Message, ChatMessage> {

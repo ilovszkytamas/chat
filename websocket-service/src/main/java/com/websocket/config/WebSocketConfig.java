@@ -1,4 +1,4 @@
-package com.chatbackend.config;
+package com.websocket.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,3 @@
-// src/api/index.ts
 import axios from 'axios';
 
 const BASE_API = axios.create({
