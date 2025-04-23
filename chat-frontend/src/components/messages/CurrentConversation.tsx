@@ -6,7 +6,7 @@ import { getWebSocketService } from '../../config/webSocketService';
 import { useGlobalContext } from '../../store/context/GlobalContext';
 import { useRefreshSignedInUser } from '../../hooks/useRefreshSignedInUser';
 import { Message } from '../../constants/types';
-import API from '../../config/api';
+import { BASE_API } from '../../config/api';
 
 const CurrentConversation: React.FC = () => {
   const globalState = useGlobalContext();
@@ -28,7 +28,7 @@ const CurrentConversation: React.FC = () => {
   const partnerName = conversation?.partnerName;
 
   const loadMessages = async (conversationId: number, page: number = 0) => {
-    const response = await API.get(`/messages/conversations/${conversationId}?page=${page}&size=20`);
+    const response = await BASE_API.get(`/messages/conversations/${conversationId}?page=${page}&size=20`);
     return response.data;
   };
 

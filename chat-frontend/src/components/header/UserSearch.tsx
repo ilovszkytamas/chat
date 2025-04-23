@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Box, ListItem, ListItemButton, ListItemText, Paper, TextField } from '@mui/material';
 import { ProfileData } from '../../constants/types';
-import API from '../../config/api';
 import { useNavigate } from 'react-router-dom';
+import { BASE_API } from '../../config/api';
 
 const UserSearch: React.FC = () => {
   const [searchTerm, setSearchTerm] = React.useState<string>('');
@@ -10,7 +10,7 @@ const UserSearch: React.FC = () => {
   const navigate = useNavigate();
 
   const sendSearchRequest = async (searchTerm: string) => {
-    const response = await API.get(`/user/search/${searchTerm}`);
+    const response = await BASE_API.get(`/user/search/${searchTerm}`);
     setSearchResult(response.data);
   }
 

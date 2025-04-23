@@ -2,9 +2,9 @@ import { ChatBubbleOutline, Circle, Person } from '@mui/icons-material';
 import { Paper, Typography, List, ListItem, ListItemText, Divider, IconButton, Box } from '@mui/material';
 import React from 'react';
 import { MessageContext } from '../../store/context/MessageContext';
-import API from '../../config/api';
 import { setFriendList } from '../../store/actions/MessageAction';
 import { useNavigate } from 'react-router-dom';
+import { BASE_API } from '../../config/api';
 
 const FriendList: React.FC = () => {
   const { state, dispatch } = React.useContext(MessageContext);
@@ -12,7 +12,7 @@ const FriendList: React.FC = () => {
   const navigate = useNavigate();
 
   const loadFriendList = async () => {
-    const friendList = (await API.get("/friend/list")).data;
+    const friendList = (await BASE_API.get("/friend/list")).data;
     console.log(friendList);
     dispatch(setFriendList(friendList));
   }
@@ -22,7 +22,7 @@ const FriendList: React.FC = () => {
   }, []);
 
   const openConversation = async (partnerId: number) => {
-    const conversationId = (await API.put(`/conversation/${partnerId}`)).data;
+    const conversationId = (await BASE_API.put(`/conversation/${partnerId}`)).data;
     console.log(conversationId);
   }
 

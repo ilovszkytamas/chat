@@ -1,9 +1,8 @@
-package com.chatbackend.controller;
+package com.imageservice.controller;
 
-import com.chatbackend.dto.response.ImageResponse;
-import com.chatbackend.model.User;
-import com.chatbackend.service.ImageService;
-import jakarta.servlet.http.HttpServletResponse;
+import com.imageservice.dto.ImageResponse;
+import com.imageservice.model.User;
+import com.imageservice.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;

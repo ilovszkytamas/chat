@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, CircularProgress } from '@mui/material';
-import API from '../../config/api';
 import { useGlobalContext } from '../../store/context/GlobalContext';
+import { IMAGE_API } from '../../config/api';
 
 interface ProfileAvatarProps {
   userId?: number;
@@ -18,7 +18,7 @@ const ProfileAvatar: React.FC<ProfileAvatarProps> = ({ userId, size = 40 }) => {
   useEffect(() => {
     const fetchProfileImage = async () => {
       try {
-        const response = await API.get(`/img/profile/${userId || signedInUser.id}`, { responseType: 'blob' });
+        const response = await IMAGE_API.get(`/img/profile/${userId || signedInUser.id}`, { responseType: 'blob' });
         const imageUrl = URL.createObjectURL(response.data);
         setImageUrl(imageUrl);
       } catch (error) {

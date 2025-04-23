@@ -10,8 +10,8 @@ import {
 import React from 'react';
 import { MessageContext } from '../../store/context/MessageContext';
 import { setConversations, setSelectedConversationId } from '../../store/actions/MessageAction';
-import API from '../../config/api';
 import ProfileAvatar from '../common/ProfileAvatar';
+import { BASE_API } from '../../config/api';
 
 const ConversationList: React.FC = () => {
   const { state, dispatch } = React.useContext(MessageContext);
@@ -22,7 +22,7 @@ const ConversationList: React.FC = () => {
   }
 
   const loadConversationList = async () => {
-    const conversationList = (await API.get("/conversation")).data;
+    const conversationList = (await BASE_API.get("/conversation")).data;
     console.log(conversationList);
     dispatch(setConversations(conversationList));
   }

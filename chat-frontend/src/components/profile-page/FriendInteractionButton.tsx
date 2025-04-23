@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import API from '../../config/api';
 import { FriendRelation } from '../../constants/enums';
 import { Button, ButtonProps, Stack, Tooltip } from '@mui/material';
+import { BASE_API } from '../../config/api';
 
 interface Props {
   hidden: boolean;
@@ -13,7 +13,7 @@ const FriendInteractionButton: React.FC<Props> = (props) => {
   const [relation, setRelation] = useState<FriendRelation>(FriendRelation.NONE);
   console.log(relation)
   const getFriendRelation = async (id: number) => {
-    const response = await API.get(`/friend/relation/${id.toString()}`);
+    const response = await BASE_API.get(`/friend/relation/${id.toString()}`);
     const { data } = response
     setRelation(data);
   }
@@ -25,25 +25,21 @@ const FriendInteractionButton: React.FC<Props> = (props) => {
   }, [hidden, id]);
 
   const addFriend = async () => {
-    const response = await API.put(`/friend/relation/request/${id?.toString()}`);
+    const response = await BASE_API.put(`/friend/relation/request/${id?.toString()}`);
     const { data } = response
     setRelation(data);
   }
 
   const cancelFriendRequest = async () => {
-    const response = await API.put(`/friend/relation/reject/${id?.toString()}`);
+    const response = await BASE_API.put(`/friend/relation/reject/${id?.toString()}`);
     const { data } = response
     setRelation(data);
   }
 
   const acceptFriendRequest = async () => {
-    const response = await API.put(`/friend/relation/accept/${id?.toString()}`);
+    const response = await BASE_API.put(`/friend/relation/accept/${id?.toString()}`);
     const { data } = response
     setRelation(data);
-  }
-
-  const sendMessage = () => {
-    // this will call the conversation controller on the backend to get or create the conversation with the user
   }
 
   const renderButton = (text: string, onClick: () => void, color: ButtonProps['color']) => (

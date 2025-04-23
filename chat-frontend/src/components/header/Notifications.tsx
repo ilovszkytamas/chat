@@ -4,10 +4,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import { useGlobalContext } from '../../store/context/GlobalContext';
 import { Notification } from '../../constants/types';
-import API from '../../config/api';
 import { Badge, Divider, IconButton, List, ListItem, ListItemText, Popover, Typography } from '@mui/material';
 import { NotificationStatus } from '../../constants/enums';
 import { useNavigate } from 'react-router-dom';
+import { BASE_API } from '../../config/api';
 
 const Notifications: React.FC = () => {
   const { state } = useGlobalContext()
@@ -23,7 +23,7 @@ const Notifications: React.FC = () => {
     if (!signedInUser || eventSourceRef.current) return;
     async function fetchNotifications() {
       if (signedInUser) {
-        const retreivedNotifications: Notification[] = (await API.get(`/notifications`)).data;
+        const retreivedNotifications: Notification[] = (await BASE_API.get(`/notifications`)).data;
         console.log(retreivedNotifications)
         setNotifications(retreivedNotifications);
       }
@@ -70,12 +70,12 @@ const Notifications: React.FC = () => {
   };
 
   const deleteNotification = (notificationId: number) => {
-    API.delete(`/notifications/${notificationId}`);
+    BASE_API.delete(`/notifications/${notificationId}`);
     setNotifications(prev => prev.filter(current => current.id !== notificationId));
   }
 
   const readNotiticationAndNavigateToProfile = (notification: Notification) => {
-    API.patch(`/notifications/${notification.id}`);
+    BASE_API.patch(`/notifications/${notification.id}`);
     setNotifications(prev => prev.map(current => current.id === notification.id ? {...current, notificationStatus: NotificationStatus.READ} : current));
     navigate(`/profile?id=${notification.senderId}`);
   }

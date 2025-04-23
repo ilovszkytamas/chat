@@ -1,7 +1,7 @@
-package com.chatbackend.service;
+package com.imageservice.service;
 
-import com.chatbackend.dto.response.ImageResponse;
-import com.chatbackend.model.User;
+import com.imageservice.dto.ImageResponse;
+import com.imageservice.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;

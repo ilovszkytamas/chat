@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import API from '../../config/api';
 import { Button } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { ErrorType } from '../../constants/enums';
@@ -10,6 +9,7 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 import { useRefreshSignedInUser } from '../../hooks/useRefreshSignedInUser';
 import { useGlobalContext } from '../../store/context/GlobalContext';
 import FriendInteractionButton from './FriendInteractionButton';
+import { BASE_API, IMAGE_API } from '../../config/api';
 
 const ProfilePage: React.FC = () => {
   const { state } = useGlobalContext();
@@ -40,7 +40,7 @@ const ProfilePage: React.FC = () => {
       setProfileData(currentUser);
       setIsEditDisabled(false);
     } else {
-      const response = await API.get(`/user/${urlId}`);
+      const response = await BASE_API.get(`/user/${urlId}`);
       const { data } = response;
       setProfileData(data);
       setIsEditDisabled(true);
@@ -51,7 +51,7 @@ const ProfilePage: React.FC = () => {
     if (!profileData.id) return;
   
     try {
-      const response = await API.get(`/img/profile/${profileData.id}`, {
+      const response = await IMAGE_API.get(`/img/profile/${profileData.id}`, {
         responseType: "blob",
       });
       const { data } = response;
@@ -104,7 +104,7 @@ const ProfilePage: React.FC = () => {
   const submitChanges = async () => {
     if (inputRef.current.validateFields()) {
       try {
-        const response = await API.post('/user/current', { ...profileData });
+        const response = await BASE_API.post('/user/current', { ...profileData });
         console.log(response);
       } catch (error: any) {
         const { data } = error?.response;
@@ -120,7 +120,7 @@ const ProfilePage: React.FC = () => {
       const formData = new FormData();
       formData.append('file', uploadableImage);
       formData.append('type', uploadableImage.type);
-      const response = await API.post('/img/upload', formData);
+      const response = await IMAGE_API.post('/img/upload', formData);
       console.log(response);
     }
   };

@@ -1,4 +1,4 @@
-package com.chatbackend.dto.response;
+package com.imageservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
