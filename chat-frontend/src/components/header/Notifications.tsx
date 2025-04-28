@@ -30,7 +30,7 @@ const Notifications: React.FC = () => {
     }
     fetchNotifications();
     let eventSource: EventSourcePolyfill | null = null;
-    eventSource = new EventSourcePolyfill(`http://localhost:8080/notifications/${signedInUser.id}`, {
+    eventSource = new EventSourcePolyfill(`http://localhost:8084/notifications/${signedInUser.id}`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }

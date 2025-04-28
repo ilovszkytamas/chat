@@ -159,7 +159,6 @@ const CurrentConversation: React.FC = () => {
           const isMe = msg.senderId === globalState.state.signedInUser.id;
           return (
             <Box
-              key={index}
               sx={{
                 display: 'flex',
                 justifyContent: isMe ? 'flex-end' : 'flex-start',
@@ -174,9 +173,25 @@ const CurrentConversation: React.FC = () => {
                   bgcolor: isMe ? 'primary.light' : 'grey.300',
                   color: isMe ? 'white' : 'text.primary',
                   boxShadow: 1,
+                  overflow: 'hidden',
+                  wordWrap: 'break-word',
+                  whiteSpace: 'pre-wrap',
+                  overflowWrap: 'break-word',
+                  wordBreak: 'break-word',
+                  maxHeight: '200px',
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
-                <Typography variant="body2">{msg.content}</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    overflow: 'auto',
+                    flex: 1,
+                  }}
+                >
+                  {msg.content}
+                </Typography>
                 <Typography
                   variant="caption"
                   color="text.secondary"

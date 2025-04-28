@@ -3,6 +3,7 @@ package com.chatbackend.service;
 import com.chatbackend.dto.response.FriendDTO;
 import com.chatbackend.enums.FriendRelation;
 import com.chatbackend.enums.NotificationEventType;
+import com.chatbackend.grpc.GrpcClientService;
 import com.chatbackend.model.Friend;
 import com.chatbackend.model.User;
 import com.chatbackend.repository.FriendRepository;
@@ -22,6 +23,7 @@ public class FriendService {
     private final FriendRepository friendRepository;
     private final NotificationService notificationService;
     private final ConversionService conversionService;
+    private final GrpcClientService grpcClientService;
 
     public FriendRelation getFriendRelation(final User currentUser, final Long otherUserId) {
         final User otherUser = userService.getUserById(otherUserId);
@@ -50,7 +52,8 @@ public class FriendService {
                 friendRepository.save(friend);
                 userService.save(requester);
             });
-            notificationService.createNewNotification(requester, recipient, NotificationEventType.FRIEND_REQUEST);
+
+            grpcClientService.sendNotification(requesterId, recipientId, com.notification.grpc.NotificationEventType.FRIEND_REQUEST);
 
             return FriendRelation.PENDING_SENDER;
         }
@@ -73,7 +76,8 @@ public class FriendService {
         recipient.getFriends().add(friendRecipient);
         userService.save(requester);
         userService.save(recipient);
-        notificationService.createNewNotification(requester, recipient, NotificationEventType.FRIEND_REQUEST);
+
+        grpcClientService.sendNotification(requesterId, recipientId, com.notification.grpc.NotificationEventType.FRIEND_REQUEST);
 
         return FriendRelation.PENDING_SENDER;
     }
@@ -112,7 +116,8 @@ public class FriendService {
             friendRepository.save(friend);
             userService.save(requester);
         });
-        notificationService.createNewNotification(requester, recipient, NotificationEventType.FRIEND_ACCEPT);
+
+        grpcClientService.sendNotification(requesterId, recipientId, com.notification.grpc.NotificationEventType.FRIEND_ACCEPT);
 
         return FriendRelation.ACCEPTED;
     }

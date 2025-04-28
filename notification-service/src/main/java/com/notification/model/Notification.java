@@ -1,13 +1,15 @@
-package com.websocket.model;
+package com.notification.model;
 
+import com.notification.enums.NotificationEventType;
+import com.notification.enums.NotificationStatus;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,34 +17,34 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 @Entity
-@Table(name = "Message")
+@Table(name = "Notification")
 @ToString
-public class Message {
+public class Notification {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "conversation_id", referencedColumnName = "id")
-    private Conversation conversation;
+    @JoinColumn(name = "recipient_id", referencedColumnName = "id")
+    private User recipient;
 
     @ManyToOne
     @JoinColumn(name = "sender_id", referencedColumnName = "id")
     private User sender;
 
-    @Lob
-    private String content;
-    private LocalDateTime createdAt;
+    @Enumerated(EnumType.STRING)
+    private NotificationStatus notificationStatus;
 
-    @PrePersist
-    private void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
+    @Enumerated(EnumType.STRING)
+    private NotificationEventType notificationEventType;
+
+    private Timestamp timestamp;
+    private boolean isDeleted;
 }

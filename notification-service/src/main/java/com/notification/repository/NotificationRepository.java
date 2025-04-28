@@ -1,7 +1,7 @@
-package com.chatbackend.repository;
+package com.notification.repository;
 
-import com.chatbackend.model.Notification;
-import com.chatbackend.model.User;
+import com.notification.model.Notification;
+import com.notification.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +14,5 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
     //List<Notification> findTop10ByNotificationStatusAndRecipientOrderByTimestampAsc(NotificationStatus notificationStatus, User recipient);
 
-    List<Notification> findTop10ByRecipientAndIsDeletedFalseOrderByTimestampDesc(User recipient);
+    List<Notification> findTop10ByRecipientAndIsDeletedFalseOrderByTimestampAsc(User recipient);
 }
