@@ -21,6 +21,15 @@ export const messageReducer = (
         ...state,
         friendList: action.payload
       }
+    case MessageAction.UPDATE_PRESENCE:
+      return {
+        ...state,
+        friendList: state.friendList.map(friend =>
+          friend.friendId === action.payload.userId
+            ? { ...friend, online: action.payload.online }
+            : friend
+        ),
+      };
     default:
       return state;
   }

@@ -57,10 +57,6 @@ const CurrentConversation: React.FC = () => {
 
   useEffect(() => {
     refreshSignedInUser();
-    const webSocketService = getWebSocketService();
-    return () => {
-      webSocketService.disconnect();
-    };
   }, []);
 
   useEffect(() => {

@@ -3,7 +3,7 @@ package com.notification.controller;
 import com.notification.dto.NotificationDTO;
 import com.notification.model.Notification;
 import com.notification.model.User;
-import com.notification.notification.NotificationEvent;
+import com.notification.event.NotificationEvent;
 import com.notification.util.NotificationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;

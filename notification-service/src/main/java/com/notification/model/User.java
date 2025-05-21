@@ -22,7 +22,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -55,6 +57,11 @@ public class User implements UserDetails {
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Notification> sender;
+
+    @ToString.Exclude
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
+    private Set<Friend> friends = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -40,3 +40,8 @@ export interface Message {
   content: string;
   createdAt: string;
 };
+
+export interface PresenceStatus {
+  userId: number;
+  online: boolean;
+}

@@ -1,4 +1,4 @@
-package com.notification.notification;
+package com.notification.event;
 
 import com.notification.model.Notification;
 import lombok.Getter;

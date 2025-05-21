@@ -11,7 +11,6 @@ public class FriendToFriendDTOConverter implements Converter<Friend, FriendDTO> 
         return FriendDTO.builder()
                 .friendId(source.getFriend().getId())
                 .name(source.getFriend().getFirstName() + " " + source.getFriend().getLastName())
-                .isOnline(true)
                 .build();
     }
 }

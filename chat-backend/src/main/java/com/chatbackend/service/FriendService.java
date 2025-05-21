@@ -2,7 +2,6 @@ package com.chatbackend.service;
 
 import com.chatbackend.dto.response.FriendDTO;
 import com.chatbackend.enums.FriendRelation;
-import com.chatbackend.enums.NotificationEventType;
 import com.chatbackend.grpc.GrpcClientService;
 import com.chatbackend.model.Friend;
 import com.chatbackend.model.User;
@@ -21,7 +20,6 @@ import java.util.Optional;
 public class FriendService {
     private final UserService userService;
     private final FriendRepository friendRepository;
-    private final NotificationService notificationService;
     private final ConversionService conversionService;
     private final GrpcClientService grpcClientService;
 

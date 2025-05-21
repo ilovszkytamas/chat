@@ -27,8 +27,12 @@ public class ChatWebSocketController {
             Principal principal
             ) {
 
-        User user = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        User user = extractUser(principal);
 
         return conversionService.convert(messageService.saveChatMessage(message, user), ChatMessage.class);
+    }
+
+    private User extractUser(Principal principal) {
+        return (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
     }
 }

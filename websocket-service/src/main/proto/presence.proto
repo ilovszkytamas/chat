@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package presence;
+
+option java_package = "com.presence.grpc";
+option java_multiple_files = true;
+
+service PresenceService {
+    rpc UpdatePresence (PresenceRequest) returns (PresenceResponse);
+}
+
+message PresenceRequest {
+    int64 userId = 1;
+    bool online = 2;
+}
+
+message PresenceResponse {
+    bool success = 1;
+}

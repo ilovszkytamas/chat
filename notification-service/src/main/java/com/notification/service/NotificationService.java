@@ -4,7 +4,7 @@ import com.notification.enums.NotificationEventType;
 import com.notification.enums.NotificationStatus;
 import com.notification.model.Notification;
 import com.notification.model.User;
-import com.notification.notification.NotificationEventPublisher;
+import com.notification.event.NotificationEventPublisher;
 import com.notification.repository.NotificationRepository;
 import com.notification.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
